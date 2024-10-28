@@ -2,6 +2,7 @@ package com.dw.proyecto_final.controllers;
 
 
 import com.dw.proyecto_final.dtos.MarcajeDTO;
+import com.dw.proyecto_final.dtos.UsuarioDTO;
 import com.dw.proyecto_final.models.Marcaje;
 import com.dw.proyecto_final.models.Usuario;
 import com.dw.proyecto_final.services.MarcajeService;
@@ -35,18 +36,6 @@ public class MarcajeController {
     }
 
 
-/*     @PostMapping("/salida/{username}")
-        public ResponseEntity<?> registrarSalida(@PathVariable String username) {
-        Optional<Usuario> usuarioOptional = usuarioService.obtenerUsuario(username);
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            MarcajeDTO marcajeDTO = marcajeService.registrarSalida(usuario);
-        return marcajeDTO != null 
-            ? new ResponseEntity<>(marcajeDTO, HttpStatus.CREATED)
-            : new ResponseEntity<>("El usuario no tiene una entrada sin salida", HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
-    } */
 
     @PostMapping("/salida/{idUsuario}")
         public ResponseEntity<?> registrarSalida(@PathVariable Long idUsuario) {
@@ -62,99 +51,73 @@ public class MarcajeController {
 }
 
 
-
-
-
     @GetMapping("/historial/{username}")
     public ResponseEntity<?> obtenerMarcajes(@PathVariable String username) {
         Optional<Usuario> usuarioOptional = usuarioService.obtenerUsuario(username);
         if (usuarioOptional.isPresent()) {
             Usuario usuario = usuarioOptional.get();
-            List<Marcaje> marcajes = marcajeService.obtenerMarcajes(usuario);
+            List<MarcajeDTO> marcajes = marcajeService.obtenerMarcajes(usuario);
             return new ResponseEntity<>(marcajes, HttpStatus.OK);
         }
         return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
     }
 
 
-/*     @GetMapping("/")
-    public List<Marcaje> obtenerTodosLosMarcajes(){
-
-        return marcajeService.obtenerTodosLosMarcajes();
-    } */
 
     @GetMapping("/")
-    public ResponseEntity<List<Marcaje>> obtenerTodosLosMarcajes() {
-        List<Marcaje> marcajes = marcajeService.obtenerTodosLosMarcajes();
+    public ResponseEntity<List<MarcajeDTO>> obtenerTodosLosMarcajes() {
+        List<MarcajeDTO> marcajes = marcajeService.obtenerTodosLosMarcajes();
         return new ResponseEntity<>(marcajes, HttpStatus.OK);
     }
 
-
-/*     @GetMapping("/paginados/")
-    public Page<Marcaje> obtenerUsuariosPaginados(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return marcajeService.obtenerMarcajesPaginados(pageable);
-    } */
 
     @GetMapping("/paginados")
-    public ResponseEntity<Page<Marcaje>> obtenerUsuariosPaginados(
+    public ResponseEntity<List<MarcajeDTO>> obtenerMarcajesPaginados(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Marcaje> marcajes = marcajeService.obtenerMarcajesPaginados(pageable);
-        return new ResponseEntity<>(marcajes, HttpStatus.OK);
+        Page<MarcajeDTO> marcajesPage = marcajeService.obtenerMarcajesPaginados(pageable);
+
+        List<MarcajeDTO> marcajes = marcajesPage.getContent();
+
+        return marcajes.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(marcajes, HttpStatus.OK);
     }
 
-/*     @GetMapping("/departamento/{idDepartamento}")
-    public ResponseEntity<List<Marcaje>> obtenerMarcajesPorDepartamento(@PathVariable Long idDepartamento) {
-        List<Marcaje> marcajes = marcajeService.obtenerMarcajesPorDepartamento(idDepartamento);
-        return ResponseEntity.ok(marcajes);
-    } */
+
 
     @GetMapping("/departamento/{idDepartamento}")
-    public ResponseEntity<List<Marcaje>> obtenerMarcajesPorDepartamento(@PathVariable Long idDepartamento) {
-        List<Marcaje> marcajes = marcajeService.obtenerMarcajesPorDepartamento(idDepartamento);
-        return marcajes.isEmpty() 
-            ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-            : new ResponseEntity<>(marcajes, HttpStatus.OK);
+    public ResponseEntity<List<MarcajeDTO>> obtenerMarcajesPorDepartamento(@PathVariable Long idDepartamento) {
+        List<MarcajeDTO> marcajes = marcajeService.obtenerMarcajesPorDepartamento(idDepartamento);
+        return marcajes.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(marcajes, HttpStatus.OK);
     }
 
-
-/*     @GetMapping("/fuera/horario/todos")
-    public ResponseEntity<List<Marcaje>> obtenerMarcajesFueraDeHorario() {
-        List<Marcaje> marcajes = marcajeService.obtenerMarcajesFueraDeHorario();
-        return ResponseEntity.ok(marcajes);
-    } */
 
 
     @GetMapping("/fuera/horario/todos")
-    public ResponseEntity<List<Marcaje>> obtenerMarcajesFueraDeHorario() {
-        List<Marcaje> marcajes = marcajeService.obtenerMarcajesFueraDeHorario();
-        return marcajes.isEmpty() 
-            ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-            : new ResponseEntity<>(marcajes, HttpStatus.OK);
+    public ResponseEntity<List<MarcajeDTO>> obtenerMarcajesFueraDeHorario() {
+        List<MarcajeDTO> marcajes = marcajeService.obtenerMarcajesFueraDeHorario();
+        return marcajes.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(marcajes, HttpStatus.OK);
     }
 
-/*     @GetMapping("/fuera/horario")
-    public List<Usuario> obtenerUsuariosFueraDeHorario() {
-        return marcajeService.obtenerUsuariosFueraDeHorario();
-    } */
 
     @GetMapping("/fuera/horario")
     public ResponseEntity<List<Usuario>> obtenerUsuariosFueraDeHorario() {
         List<Usuario> usuariosFueraHorario = marcajeService.obtenerUsuariosFueraDeHorario();
-        return usuariosFueraHorario.isEmpty() 
-            ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-            : new ResponseEntity<>(usuariosFueraHorario, HttpStatus.OK);
+        return usuariosFueraHorario.isEmpty()
+                ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
+                : new ResponseEntity<>(usuariosFueraHorario, HttpStatus.OK);
     }
 
     @GetMapping("/marcaje/{id}")
         public ResponseEntity<MarcajeDTO> getMarcaje(@PathVariable Long id) {
         Marcaje marcaje = marcajeService.obtenerMarcajePorId(id);
 
-        // Crear un DTO con los datos específicos
         MarcajeDTO marcajeDTO = new MarcajeDTO();
         marcajeDTO.setIdMarcaje(marcaje.getIdMarcaje());
         marcajeDTO.setIdUsuario(marcaje.getUsuario().getIdUsuario());

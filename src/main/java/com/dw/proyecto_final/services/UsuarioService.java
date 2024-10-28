@@ -5,7 +5,10 @@ import com.dw.proyecto_final.models.*;
 import com.dw.proyecto_final.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
+
 
 
 @Service
@@ -51,6 +54,7 @@ public class UsuarioService {
 
         return usuarioRepository.save(usuario);
     }
+
 
     public Optional<Usuario> obtenerUsuarioPorId(Long idUsuario) {
         return usuarioRepository.findById(idUsuario);
