@@ -14,9 +14,10 @@ import java.util.Optional;
 @Repository
 public interface MarcajeRepository extends JpaRepository<Marcaje, Long> {
 
-    List<Marcaje> findByUsuarioIdUsuario(Long idUsuario);
+    List<Marcaje> findByUsuario_IdUsuario(Long idUsuario);
 
     List<Marcaje> findByUsuario(Usuario usuario);
+
 
 
     Optional<Marcaje> findFirstByUsuarioIdUsuarioOrderByFechaMarcajeDesc(Long idUsuario);

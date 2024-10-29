@@ -166,6 +166,20 @@ public class MarcajeService {
                 .orElseThrow(() -> new RuntimeException("Marcaje no encontrado con id: " + idMarcaje));
     }
 
+    public List<MarcajeDTO> obtenerMarcajesPorUsuarioId(Long idUsuario) {
+        List<Marcaje> marcajes = marcajeRepository.findByUsuario_IdUsuario(idUsuario);
+        return marcajes.stream()
+                .map(marcaje -> new MarcajeDTO(
+                        marcaje.getIdMarcaje(),
+                        marcaje.getUsuario().getIdUsuario(),
+                        marcaje.getUsuario().getUsername(),
+                        marcaje.getFechaMarcaje(),
+                        marcaje.getHoraEntrada(),
+                        marcaje.getHoraSalida(),
+                        marcaje.getDentroDeHorario()))
+                .collect(Collectors.toList());
+    }
+
 
 
 

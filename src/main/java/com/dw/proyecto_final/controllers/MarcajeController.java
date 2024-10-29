@@ -51,7 +51,7 @@ public class MarcajeController {
 }
 
 
-    @GetMapping("/historial/{username}")
+    @GetMapping("/historial/username/{username}")
     public ResponseEntity<?> obtenerMarcajes(@PathVariable String username) {
         Optional<Usuario> usuarioOptional = usuarioService.obtenerUsuario(username);
         if (usuarioOptional.isPresent()) {
@@ -60,6 +60,22 @@ public class MarcajeController {
             return new ResponseEntity<>(marcajes, HttpStatus.OK);
         }
         return new ResponseEntity<>("El usuario no existe", HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/historial/id/{id}")
+    public ResponseEntity<?> obtenerHistorialMarcajes(@PathVariable Long id) {
+        Optional<Usuario> usuarioOptional = usuarioService.obtenerUsuarioPorId(id);
+        if (!usuarioOptional.isPresent()) {
+            return new ResponseEntity<>("Usuario con ID " + id + " no encontrado", HttpStatus.NOT_FOUND);
+        }
+
+        List<MarcajeDTO> marcajes = marcajeService.obtenerMarcajesPorUsuarioId(id);
+
+        if (marcajes.isEmpty()) {
+            return new ResponseEntity<>("No se encontraron marcajes para el usuario con ID " + id, HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(marcajes, HttpStatus.OK);
     }
 
 
