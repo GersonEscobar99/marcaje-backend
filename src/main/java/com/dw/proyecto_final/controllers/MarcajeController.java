@@ -2,7 +2,6 @@ package com.dw.proyecto_final.controllers;
 
 
 import com.dw.proyecto_final.dtos.MarcajeDTO;
-import com.dw.proyecto_final.dtos.UsuarioDTO;
 import com.dw.proyecto_final.models.Marcaje;
 import com.dw.proyecto_final.models.Usuario;
 import com.dw.proyecto_final.services.MarcajeService;

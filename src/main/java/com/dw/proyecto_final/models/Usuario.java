@@ -21,7 +21,7 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long idUsuario;
 
-    @Column(name = "username", nullable = false, unique = true, length = 20)
+    @Column(name = "username", nullable = false, unique = true, length = 30)
     private String username;
 
     @Column(name = "password", nullable = false)
@@ -50,7 +50,7 @@ public class Usuario {
     private Horario horario;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "UsuarioRol",
             joinColumns = @JoinColumn(name = "id_usuario"),
