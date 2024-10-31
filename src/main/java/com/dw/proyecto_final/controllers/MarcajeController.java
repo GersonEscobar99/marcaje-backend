@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/marcajes")
+@CrossOrigin("http://localhost:4200")
 public class MarcajeController {
 
     @Autowired
