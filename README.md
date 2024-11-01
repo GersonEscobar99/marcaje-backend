@@ -6,18 +6,18 @@ Esta es una aplicación para poder realizar el marcaje de entrada y salida de un
 
 Esta aplicación fue realizada por *Estudiantes del curso de Desarrollo Web* de la facultad de Ingeniería de la Universidad Mariano Gálvez, sede Boca del Monte del departamento de Guatemala, con fecha de 18/08/2021
 ### Integrantes:
-|    NOMBRE      						      |CARNET         |
-|-------------------------------------------------|
-|Gustavo Daniel Monzon Flores     |7690-20-20745  |
-|Kennet Joab Guzmán Ramírez       |7690-21-2903   |
-|Gerson Mauricio Escobar Aguilar  |7690-20-3975   |
-|Santos Genaro Hernandez Gabriel  |7690-21-21318  |
-|William Josue Carrillo Sandoval  |7690-21-3740   |
-|Fernando Omar López Morales      |7690-21-20755  |
-|Carlos Andrés Ramírez García     |7690-21-10603  |
-|Victor Emanuel Gonzalez Ortiz    |7690-13-11075  |
-|Vani Norwin Alcantara Mendoza    |7690-18-1298   |
-|Bairon Ismael Castellanos Valle  |7690-21-10973  |
+|    NOMBRE      |APELLIDOS						 |CARNET                        |
+|----------------|-------------------------------|-----------------------------|
+|Gustavo Daniel|Monzon Flores            |7690-20-20745           |
+|Kennet Joab|Guzmán Ramírez            |7690-21-2903            |
+|Gerson Mauricio|Escobar Aguilar|7690-20-3975|
+|Santos Genaro|Hernandez Gabriel|7690-21-21318|
+|William Josue|Carrillo Sandoval|7690-21-3740|
+|Fernando Omar|López Morales|7690-21-20755|
+|Carlos Andrés|Ramírez García|7690-21-10603|
+|Victor Emanuel|Gonzalez Ortiz|7690-13-11075|
+|Vani Norwin|Alcantara Mendoza|7690-18-1298|
+|Bairon Ismael|Castellanos Valle|7690-21-10973|
 
 ## Sobre un sistema de marcaje de entrada/salida
 Un sistema de entrada y salida es un método utilizado por las empresas para realizar un seguimiento de las horas trabajadas de sus empleados. 
@@ -61,7 +61,6 @@ CREATE TABLE Usuario (
     FOREIGN KEY (id_departamento) REFERENCES Departamento(id_departamento),
     FOREIGN KEY (id_departamento) REFERENCES Horario (id_horario)
 );
-drop table usuario
 
 CREATE TABLE Horario (
     id_horario SERIAL PRIMARY KEY,
