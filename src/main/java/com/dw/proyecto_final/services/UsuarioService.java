@@ -4,6 +4,7 @@ import com.dw.proyecto_final.dtos.UsuarioDTO;
 import com.dw.proyecto_final.models.*;
 import com.dw.proyecto_final.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -29,10 +30,14 @@ public class UsuarioService {
     @Autowired
     MarcajeRepository marcajeRepository;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     public Usuario crearUsuarioConRol(UsuarioDTO usuarioDTO) {
         Usuario usuario = new Usuario();
+
         usuario.setUsername(usuarioDTO.getUsername());
-        usuario.setPassword(usuarioDTO.getPassword());
+        usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setApellido(usuarioDTO.getApellido());
         usuario.setEmail(usuarioDTO.getEmail());

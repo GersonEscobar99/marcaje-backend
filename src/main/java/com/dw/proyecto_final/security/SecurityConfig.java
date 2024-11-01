@@ -50,7 +50,6 @@ public class SecurityConfig {
                 .cors(cors -> cors.and())
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/usuarios").permitAll();
                     auth.requestMatchers("/login").permitAll();
                     auth.anyRequest().authenticated();
                 })
